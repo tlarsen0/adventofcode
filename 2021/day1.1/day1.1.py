@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import csv
-
 print("2021, Day 1.1 script starting!")
 
 with open('test0') as depth_file:
