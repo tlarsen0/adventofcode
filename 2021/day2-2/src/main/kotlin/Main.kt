@@ -18,15 +18,15 @@ class TheSub {
     private var depth : Long = 0
     private var horizontal : Long = 0
 
-    fun move(direction : String, steps : Long) {
-        if (direction.compareTo("forward") == 0) {
+    private fun move(direction : String, steps : Long) {
+        if (direction == "forward") {
             horizontal += steps
             depth += aim * steps
         }
-        if (direction.compareTo("down") == 0) {
+        if (direction == "down") {
             aim += steps
         }
-        if (direction.compareTo("up") == 0) {
+        if (direction == "up") {
             aim -= steps
         }
     }
@@ -38,7 +38,6 @@ class TheSub {
 
         move(direction, steps)
     }
-
 
     fun answer() {
         println("latest aim        = $aim")
