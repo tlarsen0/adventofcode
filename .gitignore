@@ -2,3 +2,7 @@
 /2021/day2-1/.gradle/
 /2021/day2-1/.idea/
 /2021/day2-2/build/
+/2021/*/build/
+/2021/*/.idea/
+/2021/*/.gradle/
+
