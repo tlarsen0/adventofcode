@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.pow
 
 fun main(args: Array<String>) {
     println("AOC 2021, Day 3.1 starting!!!!")
@@ -23,14 +24,18 @@ interface Rate {
     fun getRate() : Int
 }
 
-class MyPair {
+data class MyPair constructor(val startZeroes : Int, val startOnes : Int){
     var zeros : Int = 0
     var ones : Int = 0
+    init {
+        zeros = startZeroes
+        ones = startOnes
+    }
 }
 
 // Shamelessly stolen https://www.programiz.com/kotlin-programming/examples/binary-decimal-convert
-fun convertBinaryToDecimal(num: Long): Int {
-    var num = num
+fun convertBinaryToDecimal(binaryNum: Long): Int {
+    var num = binaryNum
     var decimalNumber = 0
     var i = 0
     var remainder: Long
@@ -38,7 +43,7 @@ fun convertBinaryToDecimal(num: Long): Int {
     while (num.toInt() != 0) {
         remainder = num % 10
         num /= 10
-        decimalNumber += (remainder * Math.pow(2.0, i.toDouble())).toInt()
+        decimalNumber += (remainder * 2.0.pow(i.toDouble())).toInt()
         ++i
     }
     return decimalNumber
@@ -50,7 +55,7 @@ class GammaRate : Rate {
         for (i in line.indices) {
             // Initialize if first time
             if(!theData.containsKey(i)) {
-                theData[i] = MyPair()
+                theData[i] = MyPair(0,0)
             }
 
             if(line[i] == '0') {
@@ -87,7 +92,7 @@ class EpsilonRate : Rate {
         for (i in line.indices) {
             // Initialize if first time
             if(!theData.containsKey(i)) {
-                theData[i] = MyPair()
+                theData[i] = MyPair(0,0)
             }
 
             if(line[i] == '0') {
