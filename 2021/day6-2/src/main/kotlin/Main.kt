@@ -34,14 +34,9 @@ class SchoolOfFish {
     fun liveADay(days : Int) {
         val copyReproductiveCycles: HashMap<Int, Long> = HashMap(reproductiveCycles)
 
-        reproductiveCycles[7] = copyReproductiveCycles[8]!!
-        reproductiveCycles[6] = copyReproductiveCycles[7]!!
-        reproductiveCycles[5] = copyReproductiveCycles[6]!!
-        reproductiveCycles[4] = copyReproductiveCycles[5]!!
-        reproductiveCycles[3] = copyReproductiveCycles[4]!!
-        reproductiveCycles[2] = copyReproductiveCycles[3]!!
-        reproductiveCycles[1] = copyReproductiveCycles[2]!!
-        reproductiveCycles[0] = copyReproductiveCycles[1]!!
+        for(i in 7 downTo 0) {
+            reproductiveCycles[i] = copyReproductiveCycles[i + 1]!!
+        }
 
         // new fish start at 8 spawning 1 from each
         reproductiveCycles[8] = copyReproductiveCycles[0]!!
