@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
         schoolOfFish.liveADay(days)
     }
 
-    println("AOC 2021, Day 6.1 complete!!!!")
+    println("AOC 2021, Day 6.2 complete!!!!")
 }
 
 class SchoolOfFish {
