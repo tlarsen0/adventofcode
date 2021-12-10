@@ -3,7 +3,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 fun main(args: Array<String>) {
-    println("AOC 2021, Day 9.2 starting!!!!")
+    println("AOC 2021, Day 10.1 starting!!!!")
 
     var mismatchScore = 0
     val navSystemParser = NavSystemParser()
@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 
     println("Syntax Error Score: $mismatchScore")
 
-    println("AOC 2021, Day 9.2 complete!!!!")
+    println("AOC 2021, Day 10.1 complete!!!!")
 }
 
 // This should be static...
