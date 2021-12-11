@@ -1,7 +1,7 @@
 import java.io.File
 
 fun main(args: Array<String>) {
-    println("AOC 2021, Day 10.1 starting!!!!")
+    println("AOC 2021, Day 11.1 starting!!!!")
 
     var xCoord = 0
     var yCoord = 0
@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
 
     println("Flashes seen: $flashes")
 
-    println("AOC 2021, Day 10.1 complete!!!!")
+    println("AOC 2021, Day 11.1 complete!!!!")
 }
 
 class Squid constructor(initialEnergy : Int) {
