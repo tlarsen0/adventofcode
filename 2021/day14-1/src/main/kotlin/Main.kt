@@ -3,7 +3,7 @@ import java.io.File
 fun main(args: Array<String>) {
     println("AOC 2021, Day 14.1 starting!!!!")
 
-    var polymerBuilder = PolymerBuilder()
+    val polymerBuilder = PolymerBuilder()
     // args[0] should read /Users/tlarsen/src/adventofcode/2021/DAY-PART/src/main/resources
     File(args[0]).forEachLine {
         if (polymerBuilder.polymer.isEmpty()) {
