@@ -24,8 +24,6 @@ fun main(args: Array<String>) {
     //transparentPage.showPage()
     println("Dots displayed: ${transparentPage.countDots()}")
 
-    println("tlarsen,L27: ${transparentPage.foldInstructions.size}")
-
     val foldedPages = ArrayList<TransparentPage>()
     foldedPages.add(transparentPage.executeFold(0))
     for(step in 1 until transparentPage.foldInstructions.size) {
