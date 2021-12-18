@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
     println("The maximum Y: $maxY")
 
 
-    println("AOC 2021, Day 17.1 starting!!!!")
+    println("AOC 2021, Day 17.1 complete!!!!")
 }
 
 data class MyCoord constructor(val x:Int, val y:Int)
