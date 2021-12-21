@@ -86,10 +86,7 @@ class InputImage {
         maxY += 1
         minX -= 1
         minY -= 1
-        // 1 -> 5290, 5318, 5811??, 5341??, 5103
-        // 2 -> 5357
-        // 3 -> 5777
-        // 16 -> 11965
+        // 1 -> 5290, 5318, 5811, 5341, 5103, 5602, 5190, ??5338?? ??5326??
 
         for(y in minY until maxY) {
             for(x in minX until maxX) {
@@ -107,41 +104,28 @@ class InputImage {
                 val lowerRight = MyCoord(thePixel.x + 1, thePixel.y + 1)
 
                 var bitValues = ""
-                bitValues += imageData.getOrDefault(upperLeft,0).toString()
-                bitValues += imageData.getOrDefault(upPixel, 0).toString()
-                bitValues += imageData.getOrDefault(upperRight,0).toString()
-
-                bitValues += imageData.getOrDefault(leftPixel, 0).toString()
-                bitValues += imageData.getOrDefault(thePixel, 0).toString()
-                bitValues += imageData.getOrDefault(rightPixel, 0).toString()
-
-                bitValues += imageData.getOrDefault(lowerLeft, 0).toString()
-                bitValues += imageData.getOrDefault(downPixel, 0).toString()
-                bitValues += imageData.getOrDefault(lowerRight, 0).toString()
-
-                var theIntValue : Int
-                if(!imageData.containsKey(thePixel)) {
-                    theIntValue = -1
+                // The input case where you have '#' first and '.' last
+                // has the area outside the "finite center" be '#' on odd steps and '.' on even.
+                val defaultValue = if((maxX % 2) != 0) {
+                    0
                 } else {
-                    theIntValue = convertBinaryToDecimal(bitValues.toLong())
+                    1
                 }
-                //println("tlarsen,L124: $thePixel -> " + imageData.containsKey(thePixel))
-                if(imageData.containsKey(thePixel)) {
-                    newImage[thePixel] = iea.bitArray[theIntValue]
-                } else {
-                    //println("tlarsen,L128: minX = $minX, maxX = $maxX, pixel = $thePixel")
-                    //println("tlarsen,L129: minY = $minY, maxY = $maxY, pixel = $thePixel")
-                    if(theIntValue == -1) {
-                        var offIndex = iea.bitArray.first()
-                        if((maxX % 2) == 0) {
-                            offIndex = iea.bitArray.last()
-                        }
-                        println("tlarsen,L141: " + iea.bitArray[offIndex])
-                        newImage[thePixel] = iea.bitArray[offIndex]
-                    } else {
-                        newImage[thePixel] = iea.bitArray[theIntValue]
-                    }
-                }
+                bitValues += imageData.getOrDefault(upperLeft,defaultValue).toString()
+                bitValues += imageData.getOrDefault(upPixel, defaultValue).toString()
+                bitValues += imageData.getOrDefault(upperRight,defaultValue).toString()
+
+                bitValues += imageData.getOrDefault(leftPixel, defaultValue).toString()
+                bitValues += imageData.getOrDefault(thePixel, defaultValue).toString()
+                bitValues += imageData.getOrDefault(rightPixel, defaultValue).toString()
+
+                bitValues += imageData.getOrDefault(lowerLeft, defaultValue).toString()
+                bitValues += imageData.getOrDefault(downPixel, defaultValue).toString()
+                bitValues += imageData.getOrDefault(lowerRight, defaultValue).toString()
+
+                val theIntValue = convertBinaryToDecimal(bitValues.toLong())
+                newImage[thePixel] = iea.bitArray[theIntValue]
+
             }
         }
 
