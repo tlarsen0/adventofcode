@@ -9,15 +9,14 @@ class Elf {
     }
 }
 
-val listOfElves:ArrayList<Elf> = ArrayList()
-
 fun main(args: Array<String>) {
     println("AOC 2022, Day 1, Part 2 starting!!")
 
+    val listOfElves:ArrayList<Elf> = ArrayList()
     listOfElves.add(Elf())
 
     File(args[0]).forEachLine {
-        processLine(it)
+        processLine(it, listOfElves)
     }
 
     val sortedElves = listOfElves.sortedByDescending { it.calories }
@@ -35,14 +34,14 @@ fun main(args: Array<String>) {
     println("AOC 2022, Day 1, Part 2 completed.")
 }
 
-fun processLine(line:String) {
+fun processLine(line:String, elves:ArrayList<Elf>) {
     // read each line, blank links separate elves
     if(line.isBlank()) {
         // blank line, new elf
-        listOfElves.add(Elf())
+        elves.add(Elf())
     } else {
         // add more food to last elf in line
-        val elf = listOfElves.last()
+        val elf = elves.last()
         elf.addFood(line.toInt())
     }
 }
