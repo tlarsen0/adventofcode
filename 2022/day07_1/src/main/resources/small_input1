@@ -1,0 +1,27 @@
+$ cd /
+$ ls
+101 fileaaa
+102 fileaab
+103 fileaac
+dir diraaa
+dir diraab
+dir diraac
+$ cd diraaa
+$ ls
+104 fileaaaa
+105 fileaaab
+106 fileaaac
+dir diraaaa
+dir diraaab
+dir diraaac
+$ cd diraaaa
+$ ls
+107 fileaaaaa
+108 fileaaaab
+109 fileaaaac
+$ cd ..
+$ cd diraaab
+$ ls
+110 fileaaaba
+111 fileaaabb
+112 fileaaabc
