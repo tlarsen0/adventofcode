@@ -1,7 +1,7 @@
 import java.io.File
 
 fun main(args: Array<String>) {
-    println("AOC 2022, Day 1, Part 1 starting!!!")
+    println("AOC 2022, Day 6, Part 1 starting!!!")
 
     val packetMarker = ArrayDeque<Char>()
     var markerIndex = 0
