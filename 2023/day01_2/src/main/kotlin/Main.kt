@@ -3,7 +3,7 @@ import java.io.File
 fun main(args: Array<String>) {
     println("AOC 2023, Day 1, Part 2 starting!!!")
 
-    var answer:Int = 0;
+    var answer = 0
 
     File(args[0]).forEachLine {
         answer += parseLine(it)
