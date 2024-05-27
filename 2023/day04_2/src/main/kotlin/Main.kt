@@ -38,12 +38,12 @@ fun main(args: Array<String>) {
 }
 
 class Card(line:String) {
-    val rightSideNumbers:List<Int> = getRightSideNumbers(line)
-    val leftSideNumbers:List<Int> = getLeftSideNumbers(line)
+    private val rightSideNumbers:List<Int> = getRightSideNumbers(line)
+    private val leftSideNumbers:List<Int> = getLeftSideNumbers(line)
     val cardNumber:Int = getCardNumber(line)
 
     fun countMatches():Int {
-        var matches:Int = 0
+        var matches = 0
         for(n in leftSideNumbers) {
             if(rightSideNumbers.contains(n))
                 matches++
