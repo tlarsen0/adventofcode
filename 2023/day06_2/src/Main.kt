@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
         val theSplit = it.split("""\W+""".toRegex())
 
         if(theSplit.first() == "Time") {
-            val rebuildTime = ArrayList<Int>();
+            val rebuildTime = ArrayList<Int>()
 
             for(split in theSplit) {
                 if(split == theSplit.first()) {
@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
             }
             time.raceTime = rebuildValue(rebuildTime)
         } else {
-            val rebuildDistance = ArrayList<Int>();
+            val rebuildDistance = ArrayList<Int>()
             for(split in theSplit) {
                 if(split == theSplit.first()) {
                     // skp the "Distance"
