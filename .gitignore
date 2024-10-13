@@ -5,4 +5,5 @@
 /2021/*/build/
 /2021/*/.idea/
 /2021/*/.gradle/
-
+.gitignore
+.DS_Store
