@@ -18,39 +18,38 @@ fun main(args: Array<String>) {
         }
     }
 
-    val steps = traverseNodes(directions, allNodes)
+    println("Total Nodes: ${allNodes.count()}")
 
-    println("Steps taken to traverse to ZZZ: $steps")
+    val stepsIter = traverseNodesIterative(directions, allNodes)
+
+    println("Steps taken to traverse to ZZZ: $stepsIter")
 
     println("AOC 2023, Day 8, Part 1 completed!!!")
 }
 
-fun traverseNodes(directions: String, nodes:ArrayList<Node>):Int {
-    return helper(0, nodes.first(), directions, nodes)
-}
+fun traverseNodesIterative(directions: String, nodes:ArrayList<Node>):Long {
+    var nextStep = 0
+    var totalSteps = 0L
+    var currentNode = nodes.find { it.nodeName.compareTo("AAA") == 0 }!!
+    var nextNode:Node
+    while(currentNode.nodeName.compareTo("ZZZ") != 0) {
+        val leftOrRight = directions[nextStep]
+        nextNode = if(leftOrRight.compareTo('L') == 0) {
+            nodes.find { it.nodeName == currentNode.connectionLeft }!!
+        } else {
+            nodes.find { it.nodeName == currentNode.connectionRight }!!
+        }
+        currentNode = nextNode
 
-fun helper(step: Int, theNode:Node, directions: String, nodes: ArrayList<Node>):Int {
-    if(theNode.nodeName.compareTo("ZZZ") == 0) {
-        return 0
+        nextStep++
+        totalSteps++
+        if(nextStep >= directions.length) {
+            nextStep = 0
+        }
+
     }
 
-    val leftOrRight = directions[step]
-    //println("tlarsne,L40: leftOrRight = $leftOrRight")
-    val nextNode:Node
-    if(leftOrRight == 'L') {
-        //println("tlarsen,L41: taking left node")
-        nextNode = nodes.find { it.nodeName == theNode.connectionLeft }!!
-    } else {
-        //println("tlarsen,L45: taking right node, moving to ${theNode.connectionRight} ")
-        nextNode = nodes.find { it.nodeName == theNode.connectionRight }!!
-    }
-
-    var nextStep = step + 1
-    if(nextStep >= directions.length) {
-        nextStep = 0
-    }
-
-    return 1 + helper(nextStep, nextNode, directions, nodes)
+    return totalSteps
 }
 
 data class Node (val nodeName:String, val connectionLeft:String, val connectionRight:String)
