@@ -1,4 +1,6 @@
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun main(args: Array<String>) {
     println("AOC 2023, Day 8, Part 2 starting!!!!")
@@ -24,11 +26,21 @@ fun main(args: Array<String>) {
     val nodesEndWithZ = findNodesEndsWithZ(allNodes)
     println("Finding nodes that end with Z: $nodesEndWithZ")
 
-    println("tlarsen,L27: lcm(15, 20) = ${lcm(15, 20)}")
+    val foundCount = Stack<Long>()
+    nodesEndWithA.forEach {
+        println("Starting search starting with $it")
+        foundCount.push(traverseNodeIterative(directions, allNodes, it))
+        println("found it! Path took ${foundCount.peek()} steps.")
+    }
 
-    val stepsRecursive = traverseNodesIterative(directions, allNodes, nodesEndWithA)
+    println("Final path count results: $foundCount")
 
-    println("Steps taken to traverse to all nodes end with Z: $stepsRecursive")
+    var stepsStack = foundCount.pop()
+    while(!foundCount.empty()) {
+        stepsStack = lcm(stepsStack, foundCount.pop())
+    }
+
+    println("Steps taken to traverse to all nodes end with Z: $stepsStack")
 
     println("AOC 2023, Day 8, Part 2 completed!!!")
 }
@@ -55,40 +67,24 @@ fun findNodesEndsWithZ(nodes: ArrayList<Node>):ArrayList<Node> {
     return nodesEndsWithZ
 }
 
-fun countNodesEndsWithZ(nodes: ArrayList<Node>):Int {
-    return nodes.count { it.nodeName.last() == 'Z' }
-}
-
-fun traverseNodesIterative(directions: String, nodes: ArrayList<Node>, startNodes: ArrayList<Node>): Long {
+fun traverseNodeIterative(directions: String, nodes: ArrayList<Node>, startNode: Node): Long {
     var totalSteps = 0L
     var nextStep = 0
-    var currentNodes = ArrayList<Node>(startNodes)
-    val nextNodes = ArrayList<Node>()
-    val countA = currentNodes.count()
-    while(countNodesEndsWithZ(currentNodes) != countA) {
-        nextNodes.clear()
+    var currentNode = Node(startNode.nodeName, startNode.connectionLeft, startNode.connectionRight)
+    var nextNode:Node
+    while(currentNode.nodeName.last() != 'Z') {
         val leftOrRight = directions[nextStep]
-        if(leftOrRight == 'L') {
-            currentNodes.forEach { theNode ->
-                val leftNodeName = theNode.connectionLeft
-                nextNodes.add(nodes.find { it.nodeName == leftNodeName }!!)
-            }
+        nextNode = if(leftOrRight.compareTo('L') == 0) {
+            nodes.find { it.nodeName == currentNode.connectionLeft }!!
         } else {
-            currentNodes.forEach { theNode ->
-                val rightNodeName = theNode.connectionRight
-                nextNodes.add(nodes.find { it.nodeName == rightNodeName }!!)
-            }
+            nodes.find { it.nodeName == currentNode.connectionRight }!!
         }
-        currentNodes = ArrayList(nextNodes)
+        currentNode = nextNode
 
         nextStep++
         totalSteps++
         if(nextStep >= directions.length) {
             nextStep = 0
-        }
-        //if(totalSteps.mod(1) == 0) {
-        if((countNodesEndsWithZ(currentNodes) > 2) || (totalSteps.mod(1000000) == 0)) {
-            println("tlarsen,L78: $totalSteps : ${countNodesEndsWithZ(currentNodes)} / ${countA} current node = $currentNodes")
         }
     }
 
