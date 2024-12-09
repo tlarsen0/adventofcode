@@ -9,7 +9,6 @@ fun main(args: Array<String>) {
     File(args[0]).forEachLine {
         val theMatches = theRegex.findAll(it)
         for(match in theMatches) {
-            println("tlarsen,L11: match = ${match.value}")
             theOperations.dataList.add(match.value)
         }
     }
