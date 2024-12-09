@@ -1,7 +1,6 @@
 import java.io.File
 
-// important note: RegEx that handles the problem: mul\(\d{1,3},\d{1,3}\)
-// mul\(\d{1,3},\d{1,3}\)|do\(\)|don\'t\(\)
+// important note: RegEx that handles the problem: mul\(\d{1,3},\d{1,3}\)|do\(\)|don\'t\(\)
 fun main(args: Array<String>) {
     println("AOC 2024, Day 3, Part 2 starting!!!!")
 
