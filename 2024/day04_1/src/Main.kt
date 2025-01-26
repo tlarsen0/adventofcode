@@ -76,26 +76,33 @@ class WordSearchData {
                 nextX -= step
                 nextY -= step
             }
+            // search up        : x,     y - 1
             Direction.UP -> {
                 nextY -= step
             }
+            // search up right  : x + 1, y - 1
             Direction.UP_RIGHT -> {
                 nextX += step
                 nextY -= step
             }
+            // search left      : x - 1, y
             Direction.LEFT -> {
                 nextX -= step
             }
+            // search right     : x + 1, y
             Direction.RIGHT -> {
                 nextX += step
             }
+            // search down left : x - 1, y + 1
             Direction.DOWN_LEFT -> {
                 nextX -= step
                 nextY += step
             }
+            // search down      : x,     y + 1
             Direction.DOWN -> {
                 nextY += step
             }
+            // search down right: x + 1, y + 1
             Direction.DOWN_RIGHT -> {
                 nextX += step
                 nextY += step
@@ -109,14 +116,7 @@ class WordSearchData {
             return nextChar?.theChar == lookFor
         }
 
-
-        // search up        : x,     y - 1
-        // search up right  : x + 1, y - 1
-        // search left      : x - 1, y
-        // search right     : x + 1, y
-        // search down left : x - 1, y + 1
-        // search down      : x,     y + 1
-        // search down right: x + 1, y + 1
+        // If code arrives here, then false
         return false
     }
 
