@@ -13,7 +13,7 @@ with open('input') as csvFile:
             remainder2020 = 2020 - intValue
 
             expenseDictionary[intValue] = remainder2020
-            if expenseDictionary.has_key(remainder2020):
+            if remainder2020 in expenseDictionary:
                 answer = intValue * remainder2020
                 print('This is a match!!! The answer is: {0} * {1} = {2}'.format(intValue, remainder2020, answer))
                 break
