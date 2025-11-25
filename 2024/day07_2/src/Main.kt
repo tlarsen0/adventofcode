@@ -3,7 +3,7 @@ import kotlin.math.pow
 
 
 /**
- * Main function for Day 7, Part 1 of Advent of Code 2024.
+ * Main function for Day 7, Part 2 of Advent of Code 2024.
  * This program reads calibration data from a file, performs calculations to find a matching operator sequence,
  * and prints the sum of the final values for which a match was found.
  *
@@ -104,6 +104,42 @@ fun rotateOperators(theData: CalibrationData) {
 }
 
 /**
+ * Performs a calculation based on the operator at the given index.
+ *
+ * This function handles the initial calculation (index 0) as a special case,
+ * combining the first two values. For subsequent calculations, it applies the
+ * operator to the running total and the next value.
+ *
+ * @param runTotal The current running total of the calculation.
+ * @param data The calibration data containing values and operators.
+ * @param index The index of the operator to use.
+ * @return The result of the calculation step.
+ */
+fun doCalculation(runTotal : Long, data: CalibrationData, index: Int) : Long {
+    // special case for index 0/initial case: runTotal should be 0, calculation should be: data.vals[0] (ops[0]) data.vals[1]
+    if(index == 0) {
+        return if(data.ops[0].strOp.compareTo("+") == 0) {
+            data.vals[0] + data.vals[1]
+        } else if(data.ops[0].strOp.compareTo("*") == 0) {
+            data.vals[0] * data.vals[1]
+        } else {
+            val concat = data.vals[0].toString() + data.vals[1].toString()
+            concat.toLong()
+        }
+    }
+
+    return if(data.ops[index].strOp.compareTo("+") == 0) {
+        runTotal + data.vals[index + 1]
+    } else if(data.ops[index].strOp.compareTo("*") == 0) {
+        runTotal * data.vals[index + 1]
+    } else { // if(data.ops[index].strOp.compareTo("||") == 0) {
+        val concat = runTotal.toString() + data.vals[index + 1].toString()
+        concat.toLong()
+    }
+}
+
+
+/**
  * Checks if the current sequence of operators for a given calibration data
  * results in the expected final value.
  *
@@ -112,24 +148,9 @@ fun rotateOperators(theData: CalibrationData) {
  */
 fun checkData(data: CalibrationData): Boolean {
     // initialize runTotal: runTotal = vals[0] (ops[0]) vals[1]
-    var runTotal : Long = if(data.ops[0].strOp.compareTo("+") == 0) {
-        data.vals[0] + data.vals[1]
-    } else if(data.ops[0].strOp.compareTo("*") == 0) {
-        data.vals[0] * data.vals[1]
-    } else {
-        val concat = data.vals[0].toString() + data.vals[1].toString()
-        concat.toLong()
-    }
+    var runTotal : Long = doCalculation(0, data, 0)
     for(i in 1..(data.ops.size - 1)) {
-        if(data.ops[i].strOp.compareTo("+") == 0) {
-            runTotal += data.vals[i + 1]
-        } else if(data.ops[i].strOp.compareTo("*") == 0) {
-            runTotal *= data.vals[i + 1]
-        } else if(data.ops[i].strOp.compareTo("||") == 0) {
-            // concat runTotal and data.vals[i + 1]
-            val concat = runTotal.toString() + data.vals[i + 1].toString()
-            runTotal = concat.toLong()
-        }
+        runTotal = doCalculation(runTotal, data, i)
     }
     return runTotal == data.finalVal
 }
