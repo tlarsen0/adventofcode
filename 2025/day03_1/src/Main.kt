@@ -1,10 +1,9 @@
 import java.io.File
-import kotlin.math.max
 
 fun main(argv:Array<String>) {
     println("AOC 2025, Day 3, Part 1 starting!!!!")
 
-    val batteryBank = BatteryBank(ArrayList<String>())
+    val batteryBank = BatteryBank(ArrayList())
     File(argv[0]).forEachLine {
         batteryBank.batteryBank.add(it)
     }
