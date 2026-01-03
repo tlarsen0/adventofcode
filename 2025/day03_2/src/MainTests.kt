@@ -20,18 +20,16 @@ class MainTests {
     @DisplayName("Test lastBatteryIndex")
     fun lastBatteryIndexTest() {
         val batteryBank = "818181911112111"
-        val batteryIndexes = Array(12) { index -> index }
-        assertEquals(14, lastBatteryIndex(batteryBank, batteryIndexes, 11))
-        assertEquals(10, lastBatteryIndex(batteryBank, batteryIndexes, 10))
-        assertEquals(9, lastBatteryIndex(batteryBank, batteryIndexes, 9))
+        assertEquals(14, lastBatteryIndex(batteryBank, 11))
+        assertEquals(13, lastBatteryIndex(batteryBank, 10))
+        assertEquals(12, lastBatteryIndex(batteryBank, 9))
     }
 
     @Test
     @DisplayName("Test calculateMaxJoltage for 987654321111111")
     fun testCalculateMaxJoltage987654321111111() {
         val batteryBank = "987654321111111"
-        val joltage = calculateMaxJoltage(batteryBank)
-        assertEquals(987654321111, joltage)
+        assertEquals(987654321111, calculateMaxJoltage(batteryBank))
     }
 
     @Test
@@ -43,11 +41,17 @@ class MainTests {
     }
 
     @Test
-    @DisplayName("Test 2343453422641331233623444434443422422234243434644344344333436434324443344243444547343426444313413747")
+    @DisplayName("Test calculateMaxJoltage for value 234234234234278")
+    fun testCalculateMaxJoltage234234234234278() {
+        val batteryBank = "234234234234278"
+        assertEquals(434234234278, calculateMaxJoltage(batteryBank), "234234234234278 should have max Joltage 434234234278")
+    }
+
+    @Test
+    @DisplayName("Test Real Input Line 1")
     fun testRealInput1Line() {
-        //val batteryBank = "2343453422641331233623444434443422422234243434644344344333436434324443344243444547343426444313413747"
-        val batteryBank = "234345342264133123362"//344443444342242"// 36 characters, ~8 mins to run
+        val batteryBank = "2343453422641331233623444434443422422234243434644344344333436434324443344243444547343426444313413747"
         val maxJoltage = calculateMaxJoltage(batteryBank)
-        assertEquals(643312336234, maxJoltage)
+        assertEquals(764443413747, maxJoltage)
     }
 }
