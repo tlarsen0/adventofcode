@@ -45,7 +45,7 @@ fun main(argv: Array<String>) {
     }
     var theTotal = 0L
     for(formula in allFormulas) {
-        val answer = formula.doHomeworkNew()
+        val answer = formula.doHomework()
         println("Formula: $formula".padEnd(30, ' ') + " = $answer")
         theTotal += answer
     }

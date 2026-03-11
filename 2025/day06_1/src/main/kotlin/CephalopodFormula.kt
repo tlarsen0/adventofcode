@@ -12,5 +12,5 @@ class CephalopodFormula {
         return params.joinToString(operation.toString())
     }
 
-    fun doHomeworkNew() : Long = params.map { it.toLong() }.reduce { acc, i -> operation.calculate(acc, i) }
+    fun doHomework() : Long = params.map { it.toLong() }.reduce { acc, i -> operation.calculate(acc, i) }
 }
