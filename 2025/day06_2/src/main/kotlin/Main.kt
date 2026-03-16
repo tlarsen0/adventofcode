@@ -60,7 +60,6 @@ fun main(argv: Array<String>) {
         println("Formula: $formula".padEnd(30, ' ') + " = $answer")
         theTotal += answer
     }
-    // Correct answer: 10188206723429
     println("The total calculated using Cephalopod Math: $theTotal")
 
     println("AOC 2025, Day 6, Part 2 completed!!!")
