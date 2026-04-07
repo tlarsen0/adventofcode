@@ -12,49 +12,56 @@ class TachyonManifold {
 
     /**
      * fireTachyons calculates and returns the number of timelines generated in total.
+     * Uses memoization to avoid exponential time complexity.
      */
     fun fireTachyons(): Long {
-        var completedBeams = 0L
+        val memo = mutableMapOf<Pair<Int, Int>, Long>()
 
-        fun fireStep(manifoldIndex: Int, beamIndex: Int) {
-            // end case: if beam is off the bottom of the manifold, halt and count it.
+        fun fireStep(manifoldIndex: Int, beamIndex: Int): Long {
+            // Check if we've already computed this position
+            val key = Pair(manifoldIndex, beamIndex)
+            memo[key]?.let { return it }
+
+            // End case: if beam is off the bottom of the manifold, count it
             if (manifoldIndex == allManifolds.size) {
-                completedBeams++
-                if (completedBeams % 100_000_000 == 0L) {
-                    println("Beam completed: ${completedBeams / 100_000_000} hundred million")
-                }
-                return
+                return 1L
             }
 
             val theChars = allManifolds[manifoldIndex].toCharArray()
 
-            // Start case: find 'S'
-            if ((completedBeams == 0L) && (beamIndex == -1)) {
-                val startIndex = theChars.indexOfFirst { it == 'S' }
-                if (startIndex != -1) {
-                    fireStep(manifoldIndex + 1, startIndex)
-                }
-                println("L37: WARN - this should not be executed")
-                return
-            }
-
-            when(theChars[beamIndex]) {
+            val result = when(theChars[beamIndex]) {
                 '^' -> {
                     // Left beam
-                    fireStep(manifoldIndex + 1, beamIndex - 1)
-
+                    val left = fireStep(manifoldIndex + 1, beamIndex - 1)
                     // Right beam
-                    fireStep(manifoldIndex + 1, beamIndex + 1)
+                    val right = fireStep(manifoldIndex + 1, beamIndex + 1)
+                    left + right
                 }
                 else -> {
                     // Continue straight
                     fireStep(manifoldIndex + 1, beamIndex)
                 }
             }
+
+            memo[key] = result
+            return result
         }
 
-        fireStep(0, -1)
-        return completedBeams
+        return fireStep(0, findStart())
+    }
+
+    /**
+     * findStart returns the index/position to start the beam, by definition it is in the 0/first row, character 'S'.
+     */
+    private fun findStart(): Int {
+        val theChars = allManifolds[0].toCharArray()
+        val startIndex = theChars.indexOfFirst { it == 'S' }
+        if (startIndex != -1) {
+            return startIndex
+        }
+        println("L37: WARN - this should not be executed")
+        return -1
+
     }
 
     override fun toString(): String {
