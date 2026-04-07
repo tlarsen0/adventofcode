@@ -16,52 +16,44 @@ class TachyonManifold {
     fun fireTachyons(): Long {
         var completedBeams = 0L
 
-        fun fireStep(manifoldIndex: Int, currBeam: MutableList<Int>) {
+        fun fireStep(manifoldIndex: Int, beamIndex: Int) {
+            // end case: if beam is off the bottom of the manifold, halt and count it.
             if (manifoldIndex == allManifolds.size) {
                 completedBeams++
                 if (completedBeams % 100_000_000 == 0L) {
-                    println("Beam completed: ${completedBeams / 1_000_000} hundred million")
+                    println("Beam completed: ${completedBeams / 100_000_000} hundred million")
                 }
                 return
             }
 
-            val manifold = allManifolds[manifoldIndex]
-            val chars = manifold.toCharArray()
+            val theChars = allManifolds[manifoldIndex].toCharArray()
 
             // Start case: find 'S'
-            if (currBeam.isEmpty()) {
-                val startIndex = chars.indexOfFirst { it == 'S' }
+            if ((completedBeams == 0L) && (beamIndex == -1)) {
+                val startIndex = theChars.indexOfFirst { it == 'S' }
                 if (startIndex != -1) {
-                    currBeam.add(startIndex)
-                    fireStep(manifoldIndex + 1, currBeam)
-                    currBeam.removeLast()
+                    fireStep(manifoldIndex + 1, startIndex)
                 }
+                println("L37: WARN - this should not be executed")
                 return
             }
 
-            val beamPos = currBeam.last()
-            when (chars[beamPos]) {
+            when(theChars[beamIndex]) {
                 '^' -> {
                     // Left beam
-                    currBeam.add(beamPos - 1)
-                    fireStep(manifoldIndex + 1, currBeam)
-                    currBeam.removeLast()
+                    fireStep(manifoldIndex + 1, beamIndex - 1)
 
                     // Right beam
-                    currBeam.add(beamPos + 1)
-                    fireStep(manifoldIndex + 1, currBeam)
-                    currBeam.removeLast()
+                    fireStep(manifoldIndex + 1, beamIndex + 1)
                 }
                 else -> {
                     // Continue straight
-                    currBeam.add(beamPos)
-                    fireStep(manifoldIndex + 1, currBeam)
-                    currBeam.removeLast()
+                    fireStep(manifoldIndex + 1, beamIndex)
                 }
             }
         }
 
-        fireStep(0, mutableListOf())
+        fireStep(0, -1)
         return completedBeams
     }
 

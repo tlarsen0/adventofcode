@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
 
     println("Firing tachyons!")
     val timelineCount = tachyonManifold.fireTachyons()
-    println("Beam split count: $timelineCount")
+    println("Time Line count: $timelineCount")
     //println("L27: tachyonManifold = $tachyonManifold")
     //println("L28: completed beams: ${tachyonManifold.completedBeams}")
 
