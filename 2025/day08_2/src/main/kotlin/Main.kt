@@ -1,10 +1,10 @@
-package org.tlarsen.adventofcode2025.day08.part1
+package org.tlarsen.adventofcode2025.day08.part2
 
 import java.io.File
 
 fun main(args: Array<String>) {
-    println("AOC 2025, Day 8, Part 1 starting!!!!")
-    println("Details of problem are here: https://adventofcode.com/2025/day/8#part1")
+    println("AOC 2025, Day 8, Part 2 starting!!!!")
+    println("Details of problem are here: https://adventofcode.com/2025/day/8#part2")
 
     val allJunctions = ArrayList<JunctionCoords>()
     File(args[0]).forEachLine {
@@ -13,9 +13,9 @@ fun main(args: Array<String>) {
     }
 
     // The problem statement for Day 8, part 1 mentions they want 10 junctions for example data, 1000 for full data.
-    println("Answer for ${args[0]}: ${solveForNJunctions(allJunctions, 1000)}")
+    println("Answer for ${args[0]}, last 2 connections -> x * x: ${solveForLastTwo(allJunctions)}")
 
-    println("AOC 2025, Day 8, Part 1 completed!!!")
+    println("AOC 2025, Day 8, Part 2 completed!!!")
 }
 
 /**
@@ -28,8 +28,7 @@ data class JunctionCoords(val x: Long, val y: Long, val z: Long)
  */
 data class JunctionEdge(val distance: Long, val x: Int, val y: Int)
 
-
-fun solveForNJunctions(allJunctions: ArrayList<JunctionCoords>, solveForJunctions: Int): Long {
+fun solveForLastTwo(allJunctions: List<JunctionCoords>) : Long {
     val numJunctions = allJunctions.size
 
     val edges = ArrayList<JunctionEdge>()
@@ -41,15 +40,27 @@ fun solveForNJunctions(allJunctions: ArrayList<JunctionCoords>, solveForJunction
             edges.add(JunctionEdge((dx * dx + dy * dy + dz * dz), x, y))
         }
     }
+
     edges.sortBy { it.distance }
 
     val unionFind = UnionFind(numJunctions)
-    for(edge in edges.take(solveForJunctions)) {
-        unionFind.union(edge.x, edge.y)
+    var circuitCount = numJunctions
+    for(edge in edges) {
+        if(unionFind.find(edge.x) != unionFind.find(edge.y)) {
+            unionFind.union(edge.x, edge.y)
+            circuitCount--
+        }
+
+        // loop until last 2 circuits are connected, which are 1 and 0
+        if(circuitCount == 1) {
+            val edge1X = allJunctions[edge.x].x
+            val edge0X = allJunctions[edge.y].x
+
+            return edge1X * edge0X
+        }
     }
 
-    val sizes = unionFind.circuitSizes(numJunctions)
-    return sizes[0].toLong() * sizes[1].toLong() * sizes[2].toLong()
+    error("No solution! Circuit/graph may be impossible to connect.")
 }
 
 /**
