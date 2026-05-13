@@ -52,10 +52,25 @@ fun solveForNJunctions(allJunctions: ArrayList<JunctionCoords>, solveForJunction
     return sizes[0].toLong() * sizes[1].toLong() * sizes[2].toLong()
 }
 
+/**
+ * Union-Find (Disjoint Set Union) data structure with path compression and
+ * union-by-size. Tracks connected components in a graph.
+ *
+ * @property parent Array where each index stores its parent (root points to itself).
+ * @property size Array storing the size of each tree rooted at the given index.
+ * @param n Number of elements (initially each is its own component).
+ */
 class UnionFind(n: Int) {
     private val parent = IntArray(n) { it }
     private val size = IntArray(n) { 1 }
 
+    /**
+     * Finds the root (representative) of the set containing [a].
+     * Applies path compression to flatten the tree.
+     *
+     * @param a Element to find.
+     * @return Root element of the set.
+     */
     fun find(a: Int): Int {
         var x = a
         while (parent[x] != x) {
@@ -65,6 +80,13 @@ class UnionFind(n: Int) {
         return x
     }
 
+    /**
+     * Unions the sets containing [a] and [b]. Uses the size of each set to
+     * attach the smaller tree under the larger tree.
+     *
+     * @param a First element.
+     * @param b Second element.
+     */
     fun union(a: Int, b: Int) {
         val ra = find(a)
         val rb = find(b)
@@ -78,6 +100,12 @@ class UnionFind(n: Int) {
         }
     }
 
+    /**
+     * Returns the sizes of all connected components, sorted descending.
+     *
+     * @param n Total number of elements to consider.
+     * @return List of component sizes, largest first.
+     */
     fun circuitSizes(n: Int): List<Int> {
         val counts = mutableMapOf<Int, Int>()
         for (i in 0 until n) {
