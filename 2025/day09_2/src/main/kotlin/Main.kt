@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
     }
 
     println("The max area found: $maxArea")
-    println("AOC 2025, Day 9, Part 1 completed!!!")
+    println("AOC 2025, Day 9, Part 2 completed!!!")
 }
 
 /**
